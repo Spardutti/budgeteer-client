@@ -1,18 +1,9 @@
 import { apiManager } from "api";
-import React from "react";
+import { Login } from "components/Login";
+import React, { useState } from "react";
 
 function App() {
-	const { mutateAsync, error } = apiManager.useCreateUser("Churu", 1234);
-
-	const create = () => mutateAsync();
-
-	if (error) console.log("X", error);
-	return (
-		<>
-			<div>Home</div>
-			<button onClick={create} />
-		</>
-	);
+	return <Login />;
 }
 
 export default App;
