@@ -1,29 +1,32 @@
-import { apiManager } from "api";
-import axios, { Axios, AxiosError } from "axios";
-import { useState } from "react";
+import { FormsManager } from "components/forms/FormsManager";
+import { BrowserRouter, Routes, Route, useRoutes } from "react-router-dom";
+import { AuthRoute } from "components/auth/AuthRoute";
+import { Provider } from "react-redux";
+import store from "store/store";
+import { Home } from "components/home/home";
 
 function App() {
-	const [errors, setErrors] = useState();
-	const create = async () => {
-		try {
-			const response = await apiManager.createUser("Churus", "12345");
-		} catch (err) {
-			if (axios.isAxiosError(err)) {
-				const data = err.response?.data;
-				setErrors(data);
-			}
-		}
-	};
-
+	const Nav = () =>
+		useRoutes([
+			// { path: "/home", element: <NavBar /> },
+			// { path: "/upcoming", element: <NavBar /> },
+			// { path: "/category/:categoryId", element: <NavBar /> },
+			// { path: "/history", element: <NavBar /> },
+			// {},
+		]);
 	return (
-		<>
-			<div>Home</div>
-			<button onClick={create}>Click</button>
-			<p>Username</p>
-			{errors ? errors["username"] : null}
-			<p>Password</p>
-			{errors ? errors["password"] : null}
-		</>
+		<BrowserRouter>
+			<Provider store={store}>
+				<Routes>
+					<Route path='/' element={<FormsManager.CreateUser />} />
+					<Route path='/login' element={<FormsManager.Login />} />
+					<Route path='/create' element={<AuthRoute />}>
+						<Route path='/create' element={<FormsManager.CreateUser />} />
+					</Route>
+					<Route path='/home' element={<Home />} />
+				</Routes>
+			</Provider>
+		</BrowserRouter>
 	);
 }
 

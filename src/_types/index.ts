@@ -1,8 +1,3 @@
-export interface UserInterface {
-	username: string;
-	amount: number;
-}
-
 export interface WeeklyCategory {
 	name: string;
 	user: UserInterface;
@@ -26,7 +21,14 @@ export interface MonthlyIncome {
 	week: number;
 }
 
-export interface TokenResponse {
+export interface TokensInterface {
 	access: string;
 	refresh: string;
+}
+
+export interface UserInterface {
+	id: number;
+	username: string;
+	categories: number[];
+	amount: number;
 }
