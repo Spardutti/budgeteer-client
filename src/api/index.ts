@@ -1,5 +1,6 @@
-import { useCreateUser, useGetUser } from "./user/user";
+import { getUser, createUser, loginUser } from "./user/user";
 export const apiManager = {
-	useCreateUser,
-	useGetUser,
+	createUser,
+	getUser,
+	loginUser,
 };
