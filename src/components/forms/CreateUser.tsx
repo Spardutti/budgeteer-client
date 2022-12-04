@@ -1,3 +1,4 @@
+import { Button, Center, FormControl, FormErrorMessage, FormLabel, Input } from "@chakra-ui/react";
 import { apiManager } from "api";
 import axios from "axios";
 import { useState } from "react";
@@ -29,7 +30,7 @@ export const CreateUser = () => {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors, isValid },
+		formState: { errors, isValid, isSubmitting },
 	} = useForm<FormData>({ mode: "onChange" });
 	const onSubmit: SubmitHandler<FormData> = (data) => {
 		const { username, password } = data;
@@ -39,18 +40,29 @@ export const CreateUser = () => {
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
-			<label>Username</label>
-			<input {...register("username", { required: true })} />
-			{loginErrors ? <label>{loginErrors["username"]}</label> : null}
-			{errors.username?.type === "required" && <label>Username is required</label>}
-			<label>Password</label>
-			<input type='password' {...register("password", { required: true, minLength: 5 })} />
-			{loginErrors ? <label>{loginErrors["password"]}</label> : null}
-			{errors.password?.type === "minLength" && <label>Password must be at least 5 chars long</label>}
-			{errors.password?.type === "required" && <label>Password is required</label>}
-			<button type='submit' disabled={!isValid}>
-				Create Account
-			</button>
+			<FormControl isInvalid={Boolean(errors.username)}>
+				<FormLabel htmlFor='username'>Username</FormLabel>
+				<Input placeholder='username' {...register("username", { required: "Username is required" })} />
+				<FormErrorMessage>{errors.username && errors.username.message}</FormErrorMessage>
+			</FormControl>
+			<FormControl isInvalid={Boolean(errors.password)}>
+				<FormLabel htmlFor='password'>Password</FormLabel>
+				<Input
+					type='password'
+					autoComplete='off'
+					placeholder='password'
+					{...register("password", {
+						required: "password is required",
+						minLength: { value: 5, message: "Must be at least 5 characters long" },
+					})}
+				/>
+				<FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
+			</FormControl>
+			<Center>
+				<Button mt={4} isLoading={isSubmitting} type='submit' disabled={!isValid}>
+					Create Account
+				</Button>
+			</Center>
 		</form>
 	);
 };
