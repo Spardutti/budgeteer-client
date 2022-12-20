@@ -1,74 +1,62 @@
-import { apiManager } from "api";
-import axios from "axios";
-import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useAppDispatch } from "store/store";
-import { getTokens, getUser } from "store/slices/user/action";
-import { TokensInterface, UserInterface } from "_types";
-import { useNavigate } from "react-router-dom";
+import { Button, Center, FormControl, FormErrorMessage, FormLabel, Input, useBoolean } from "@chakra-ui/react";
+import { useProvideAuth } from "hooks/useAuth";
 
 export const Login = () => {
 	type FormData = {
 		username: string;
 		password: string;
 	};
-	const navigate = useNavigate();
-	const [loginErrors, setLoginErrors] = useState();
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const dispatch = useAppDispatch();
+	const [isLoading, setIsLoading] = useBoolean();
 
-	const setTokens = (tokens: TokensInterface) => {
-		getTokens(dispatch, tokens);
-	};
-
-	const setUser = (user: UserInterface) => {
-		getUser(dispatch, user);
-	};
-
-	const login = async (username: string, password: string) => {
-		try {
-			setIsLoading(true);
-			const response = await apiManager.loginUser(username, password);
-			if (response.status == 200) {
-				setTokens(response.data);
-				const user = await apiManager.getUser(response.data.access);
-				setUser(user.data);
-				setIsLoading(false);
-				navigate("/home");
-			}
-		} catch (err) {
-			if (axios.isAxiosError(err)) {
-				const data = err.response?.data;
-				setLoginErrors(data);
-				setIsLoading(false);
-			}
-		}
-	};
+	const { signin, loginErrors, setLoginErrors } = useProvideAuth()
+	// TODO reset login errors when user start to type again
+	// TODO create a new user and test the flow of monthly income, user amount, and categories amount update
 	const {
 		register,
 		handleSubmit,
+		reset,
 		formState: { errors, isValid },
 	} = useForm<FormData>({ mode: "onChange" });
-	const onSubmit: SubmitHandler<FormData> = (data) => {
+
+	const onSubmit: SubmitHandler<FormData> = async (data) => {
+		setIsLoading.on()
 		const { username, password } = data;
-
-		login(username, password);
+		await signin(username, password)
+		setIsLoading.off()
 	};
-
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
-			<label>Username</label>
-			<input {...register("username", { required: true })} />
-			{loginErrors ? <label>{loginErrors["username"]}</label> : null}
-			{errors.username?.type === "required" && <label>Username is required</label>}
-			<label>Password</label>
-			<input type='password' {...register("password", { required: true, minLength: 5 })} />
-			{loginErrors ? <label>{loginErrors["password"]}</label> : null}
-			{errors.password?.type === "minLength" && <label>Password must be at least 5 chars long</label>}
-			{errors.password?.type === "required" && <label>Password is required</label>}
-			<button type='submit' disabled={!isValid || isLoading}>
-				{isLoading ? "Loading" : "Sign in"}
-			</button>
+			<FormControl isInvalid={Boolean(errors.username)}>
+				<FormLabel htmlFor='username'>Username</FormLabel>
+				<Input
+					placeholder='username'
+					{...register("username", { required: "Username is required" })}
+					disabled={isLoading}
+				/>
+				<FormErrorMessage>{errors.username && errors.username.message}</FormErrorMessage>
+				<FormLabel>{loginErrors && loginErrors["username"]}</FormLabel>
+			</FormControl>
+			<FormControl isInvalid={Boolean(errors.password)}>
+				<FormLabel htmlFor='password'>Password</FormLabel>
+				<Input
+					disabled={isLoading}
+					type='password'
+					autoComplete='off'
+					placeholder='password'
+					{...register("password", {
+						required: "password is required",
+					})}
+				/>
+				<FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
+				<FormLabel>{loginErrors && loginErrors["password"]}</FormLabel>
+				<FormLabel>{loginErrors && loginErrors["detail"]}</FormLabel>
+			</FormControl>
+			<Center>
+				<Button mt={4} type='submit' isLoading={isLoading} disabled={!isValid || isLoading}>
+					Sign in
+				</Button>
+			</Center>
 		</form>
 	);
 };

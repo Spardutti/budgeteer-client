@@ -2,8 +2,8 @@ import { FormsManager } from "components/forms/FormsManager";
 import { BrowserRouter, Routes, Route, useRoutes } from "react-router-dom";
 import { AuthRoute } from "components/auth/AuthRoute";
 import { Provider } from "react-redux";
+import { Home } from "components/home/Home";
 import store from "store/store";
-import { Home } from "components/home/home";
 
 function App() {
 	const Nav = () =>
@@ -20,10 +20,9 @@ function App() {
 				<Routes>
 					<Route path='/' element={<FormsManager.CreateUser />} />
 					<Route path='/login' element={<FormsManager.Login />} />
-					<Route path='/create' element={<AuthRoute />}>
-						<Route path='/create' element={<FormsManager.CreateUser />} />
+					<Route path='/home' element={<AuthRoute />}>
+						<Route path='/home' element={<Home />} />
 					</Route>
-					<Route path='/home' element={<Home />} />
 				</Routes>
 			</Provider>
 		</BrowserRouter>

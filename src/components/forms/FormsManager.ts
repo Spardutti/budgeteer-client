@@ -1,3 +1,5 @@
 import { CreateUser } from "./CreateUser";
 import { Login } from "./Login";
-export const FormsManager = { CreateUser, Login };
+import { CreateCategory } from "./CreateCategory";
+
+export const FormsManager = { CreateUser, Login, CreateCategory };
