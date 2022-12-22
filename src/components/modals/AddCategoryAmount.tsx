@@ -32,7 +32,6 @@ type FormData = {
 
 const AddCategoryAmount: React.FC<AddCategoryAmountProps> = ({ isOpen, onOpen, onClose, name, id, setCategoryAmount }) => {
     const token = useSelector((state: RootState) => state.user.tokens?.access)
-    const user = useSelector((state: RootState) => state.user.user)
     const dispatch = useAppDispatch()
     const {
         register,
@@ -45,8 +44,9 @@ const AddCategoryAmount: React.FC<AddCategoryAmountProps> = ({ isOpen, onOpen, o
         try {
             const response = await apiManager.updateCategoryAmount(token!, amount, id)
             setCategoryAmount(response.data.amount)
-            setAmount(dispatch, amount)
-            setMonthlyAmount(dispatch, amount)
+            // setAmount(dispatch, amount)
+            setMonthlyAmount(dispatch, amount, "-")
+            reset()
             onClose()
         } catch (error) {
             console.log(error)

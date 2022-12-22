@@ -5,11 +5,10 @@ import { useEffect, useState } from "react";
 import { apiManager } from "api";
 import { WeeklyCategory } from "_types";
 import { CardsManager } from "components/cards/CardsManagers";
-import { Box, Button, Divider, Heading, HStack, StackDivider, useBoolean, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, Divider, Heading, HStack, useBoolean } from "@chakra-ui/react";
 import { DateTime } from "luxon";
 import { weekOfMonth } from "utils/utils";
 import MonthlyIncome from "components/monthlyIncome/MonthlyIncome";
-import AddCategoryAmount from "components/modals/AddCategoryAmount";
 
 export const Home = () => {
 	const token = useSelector((state: RootState) => state.user.tokens?.access);
@@ -28,6 +27,7 @@ export const Home = () => {
 		getMonthCategories();
 	}, []);
 
+	// Get the categories of this month
 	const getMonthCategories = async () => {
 		setIsLoading(true)
 		const response = await apiManager.getMonthCategories(token!, monthYear.year, monthYear.month);
@@ -44,26 +44,9 @@ export const Home = () => {
 		setIsLoading(false)
 	};
 
-	// const isSameMonth = (category: WeeklyCategory) => {
-	// 	if (category.month === DateTime.now().month && category.year === monthYear.year) return true;
-	// 	return false;
-	// };
-
-	// const isSameDate = (category: WeeklyCategory) => {
-	// 	if (
-	// 		category.month === DateTime.now().month &&
-	// 		category.year === monthYear.year &&
-	// 		category.week === weekOfMonth()
-	// 	)
-	// 		return true;
-	// 	return false;
-	// };
-
-
-
 	if (isLoading) return <Box textAlign={"center"}>Loading</Box>
 
-	if (currentWeekcategories.length == 0 && !isLoading) return <FormsManager.CreateCategory updateState={setCurrentWeekCategories} />;
+	if (currentWeekcategories.length === 0 && !isLoading) return <FormsManager.CreateCategory updateState={setCurrentWeekCategories} />;
 
 	return (
 		<Box>
@@ -84,6 +67,7 @@ export const Home = () => {
 	);
 };
 
+// Display current week categories of current month on top
 const CurrentWeekCategories: React.FC<{ currentWeekCategories: WeeklyCategory[] }> = ({ currentWeekCategories }) => (
 	<HStack spacing={"20"} m={4}>
 		{currentWeekCategories?.map((cat: WeeklyCategory, idx: number) => (
@@ -92,12 +76,13 @@ const CurrentWeekCategories: React.FC<{ currentWeekCategories: WeeklyCategory[] 
 	</HStack>
 );
 
+// Display categories that do not belong to the current week
 const OtherWeekCategories: React.FC<{ otherWeekCategories: WeeklyCategory[] }> = ({ otherWeekCategories }) => {
 	const arr = otherWeekCategories.sort((a, b) => a.week - b.week);
 	const weeks: number[] = [];
 	for (let w in arr) {
 		let week = arr[w].week;
-		if (weeks.indexOf(week) == -1) weeks.push(week);
+		if (weeks.indexOf(week) === -1) weeks.push(week);
 	}
 
 	return (
@@ -111,7 +96,7 @@ const OtherWeekCategories: React.FC<{ otherWeekCategories: WeeklyCategory[] }> =
 							</Heading>
 							<HStack spacing={"20"} m={4}>
 								{arr.map((cat: WeeklyCategory, index: number) => {
-									if (cat.week == w) {
+									if (cat.week === w) {
 										return <CardsManager.WeeklyCategoryCard {...cat} key={index} />;
 									}
 								})}

@@ -10,12 +10,12 @@ export const Login = () => {
 	const [isLoading, setIsLoading] = useBoolean();
 
 	const { signin, loginErrors, setLoginErrors } = useProvideAuth()
-	// TODO reset login errors when user start to type again
+	// TODO set button to update USER amount
 	// TODO create a new user and test the flow of monthly income, user amount, and categories amount update
 	const {
 		register,
 		handleSubmit,
-		reset,
+		watch,
 		formState: { errors, isValid },
 	} = useForm<FormData>({ mode: "onChange" });
 
@@ -25,6 +25,8 @@ export const Login = () => {
 		await signin(username, password)
 		setIsLoading.off()
 	};
+	watch(() => setLoginErrors(undefined))
+
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<FormControl isInvalid={Boolean(errors.username)}>

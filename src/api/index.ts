@@ -1,4 +1,4 @@
-import { getUser, createUser, loginUser } from "./user/user";
+import { getUser, createUser, loginUser, updateUserAmount } from "./user/user";
 import {
 	createCategory,
 	getAllCategories,
@@ -11,6 +11,7 @@ export const apiManager = {
 	createUser,
 	getUser,
 	loginUser,
+	updateUserAmount,
 
 	// Categories
 	createCategory,

@@ -24,7 +24,7 @@ const userSlice = createSlice({
 			console.log(action.payload);
 		},
 		setAmount: (state, action) => {
-			state.user!.amount -= action.payload;
+			state.user!.amount = action.payload;
 		},
 	},
 });
