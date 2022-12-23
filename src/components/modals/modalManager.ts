@@ -1,6 +1,5 @@
-import AddCategoryAmount from "components/modals/AddCategoryAmount";
-import SetUserAmount from "./SetUserAmount";
+import UpdateAmount from "./UpdateAmount";
 
-const modalManager = { AddCategoryAmount, SetUserAmount };
+const modalManager = { UpdateAmount };
 
 export default modalManager;

@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-type StateType = { amount: number };
+type StateType = { amount: number; accountBalance: number };
 
 const initialState: StateType = {
 	amount: 0,
+	accountBalance: 0,
 };
 
 const monthlyIncomeSlice = createSlice({
@@ -12,11 +13,14 @@ const monthlyIncomeSlice = createSlice({
 	reducers: {
 		setAmount: (state, action) => {
 			if (state.amount === 0) state.amount = action.payload.amount;
-			else {
-				action.payload.operator == "+"
-					? (state.amount += action.payload.amount)
-					: (state.amount -= action.payload.amount);
-			}
+			if (state.amount) state.amount += action.payload;
+			else state.amount = action.payload;
+		},
+		addAccountBalance: (state, action) => {
+			state.accountBalance += action.payload;
+		},
+		setAccountBalance: (state, action) => {
+			state.accountBalance = action.payload;
 		},
 	},
 });

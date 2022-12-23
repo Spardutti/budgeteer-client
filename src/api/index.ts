@@ -6,7 +6,7 @@ import {
 	updateCategoryAmount,
 } from "./weeklyCategory/weeklyCategory";
 
-import { updateMonthlyIncomeAmount, getMonhlyIncome } from "./monthlyIncome/monthlyIncome";
+import { updateMonthlyIncomeAmount, getMonhlyIncome, updateAccountBalance } from "./monthlyIncome/monthlyIncome";
 export const apiManager = {
 	createUser,
 	getUser,
@@ -22,4 +22,5 @@ export const apiManager = {
 	// Monthly Income
 	updateMonthlyIncomeAmount,
 	getMonhlyIncome,
+	updateAccountBalance,
 };
