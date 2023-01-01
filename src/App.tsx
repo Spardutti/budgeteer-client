@@ -1,4 +1,4 @@
-import { FormsManager } from "components/Forms/FormsManager";
+import { FormsManager } from "components/forms/FormsManager";
 import { BrowserRouter, Routes, Route, useRoutes, Navigate } from "react-router-dom";
 import { AuthRoute } from "components/Auth/AuthRoute";
 import { Provider } from "react-redux";
