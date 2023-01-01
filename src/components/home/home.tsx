@@ -8,7 +8,7 @@ import { CardsManager } from "components/Cards/CardsManagers";
 import { Box, Button, Divider, Grid, GridItem, Heading, HStack, SimpleGrid, Text, useBoolean, useColorMode } from "@chakra-ui/react";
 import { DateTime, Info } from "luxon";
 import { weekOfMonth } from "utils/utils";
-import MonthlyIncome from "components/monthlyIncome/MonthlyIncome";
+import MonthlyIncome from "components/MonthlyIncome/MonthlyIncome";
 import { getCategories } from "store/slices/weeklyCategories/action";
 import Layout from "layout/Layout";
 
