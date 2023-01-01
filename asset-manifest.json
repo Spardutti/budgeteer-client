@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/budgeteer-client/static/js/main.d470c050.js",
+    "index.html": "/budgeteer-client/index.html",
+    "main.d470c050.js.map": "/budgeteer-client/static/js/main.d470c050.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.d470c050.js"
+  ]
+}
