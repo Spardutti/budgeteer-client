@@ -1,5 +1,5 @@
 import { FormsManager } from "components/forms/FormsManager";
-import { BrowserRouter, Routes, Route, useRoutes, Navigate } from "react-router-dom";
+import { HashRouter, Routes, Route, useRoutes, Navigate } from "react-router-dom";
 import { AuthRoute } from "components/auth/AuthRoute";
 import { Provider } from "react-redux";
 import { Home } from "components/home/Home"
@@ -18,7 +18,7 @@ function App() {
 			// {},
 		]);
 	return (
-		<BrowserRouter>
+		<HashRouter  >
 			<Provider store={store}>
 				<ChakraProvider theme={theme}>
 					<Routes>
@@ -31,7 +31,7 @@ function App() {
 					</Routes>
 				</ChakraProvider>
 			</Provider>
-		</BrowserRouter>
+		</HashRouter>
 	);
 }
 
