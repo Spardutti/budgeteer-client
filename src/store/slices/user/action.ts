@@ -16,3 +16,11 @@ const userTokens = (tokens: TokensInterface) => ({
 });
 
 export const getTokens = (dispatch: AppDispatch, tokens: TokensInterface) => dispatch(userTokens(tokens));
+
+// Update user amount
+const userAmount = (amount: number) => ({
+	type: "user/setAmount",
+	payload: amount,
+});
+
+export const setAmount = (dispatch: AppDispatch, amount: number) => dispatch(userAmount(amount));

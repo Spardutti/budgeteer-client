@@ -20,6 +20,12 @@ const userSlice = createSlice({
 		getTokens: (state, action) => {
 			state.tokens = action.payload;
 		},
+		updateUser: (state, action) => {
+			console.log(action.payload);
+		},
+		setAmount: (state, action) => {
+			state.user!.amount = action.payload;
+		},
 	},
 });
 

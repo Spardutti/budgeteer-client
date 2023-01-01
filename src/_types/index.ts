@@ -5,6 +5,7 @@ export interface WeeklyCategory {
 	month: number;
 	week: number;
 	amount: number;
+	id: number;
 }
 
 export interface WeeklyExpense {
@@ -29,6 +30,5 @@ export interface TokensInterface {
 export interface UserInterface {
 	id: number;
 	username: string;
-	categories: number[];
 	amount: number;
 }
