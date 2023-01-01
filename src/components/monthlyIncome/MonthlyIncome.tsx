@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { addAccountBalance, addMonthlyAmount, setAccountBalance, setMonthlyAmount } from 'store/slices/monthlyIncome/action';
 import { RootState, useAppDispatch } from 'store/store';
 import { EditIcon } from "@chakra-ui/icons"
-import modalManager from "components/modals/modalManager";
+import modalManager from "components/Modals/modalManager";
 import { NumericFormat } from 'react-number-format';
 
 interface MonthlyIncomeProps {

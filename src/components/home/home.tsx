@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
-import { FormsManager } from "components/forms/FormsManager";
+import { FormsManager } from "components/Forms/FormsManager";
 import { useEffect, useState } from "react";
 import { apiManager } from "api";
 import { WeeklyCategory } from "_types";
-import { CardsManager } from "components/cards/CardsManagers";
+import { CardsManager } from "components/Cards/CardsManagers";
 import { Box, Button, Divider, Grid, GridItem, Heading, HStack, SimpleGrid, Text, useBoolean, useColorMode } from "@chakra-ui/react";
 import { DateTime, Info } from "luxon";
 import { weekOfMonth } from "utils/utils";

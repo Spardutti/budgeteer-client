@@ -1,7 +1,7 @@
 import { Card, CardHeader, CardBody, Heading, Box, Text, HStack, IconButton, useDisclosure } from "@chakra-ui/react";
 import { WeeklyCategory } from "_types";
 import { AddIcon } from "@chakra-ui/icons"
-import modalManager from "components/modals/modalManager";
+import modalManager from "components/Modals/modalManager";
 import { useEffect, useState } from "react";
 import { NumericFormat } from 'react-number-format';
 
