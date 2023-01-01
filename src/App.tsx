@@ -2,7 +2,7 @@ import { FormsManager } from "components/forms/FormsManager";
 import { BrowserRouter, Routes, Route, useRoutes, Navigate } from "react-router-dom";
 import { AuthRoute } from "components/auth/AuthRoute";
 import { Provider } from "react-redux";
-import { Home } from "components/home/Home";
+import { Home } from "components/home/home";
 import store from "store/store";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "theme/theme";
