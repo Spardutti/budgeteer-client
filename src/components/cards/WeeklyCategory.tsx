@@ -2,17 +2,22 @@ import { Card, CardHeader, CardBody, Heading, Box, Text, HStack, IconButton, use
 import { WeeklyCategory } from "_types";
 import { AddIcon } from "@chakra-ui/icons"
 import modalManager from "components/modals/modalManager";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NumericFormat } from 'react-number-format';
 
 
 export const WeeklyCategoryCard: React.FC<WeeklyCategory> = ({ name, amount, id }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure()
-	const [categoryAmount, setCategoryAmount] = useState<number>(amount)
+	const [categoryAmount, setCategoryAmount] = useState<number>(0)
+
+	useEffect(() => {
+		setCategoryAmount(amount)
+	}, [amount])
+
 	return (
-		<Card w={40}>
-			<CardHeader>
-				<Heading size='md' textTransform='uppercase'>
+		<Card maxW={40} ml={2} bg={"cyan.900"}>
+			<CardHeader p={2} textAlign='center'>
+				<Heading size={['xs', 'md']} textTransform='uppercase'>
 					{name}
 				</Heading>
 			</CardHeader>
@@ -27,11 +32,11 @@ export const WeeklyCategoryCard: React.FC<WeeklyCategory> = ({ name, amount, id 
 						</Text>
 					</Box>
 					<Box >
-						<IconButton aria-label="add" icon={<AddIcon />} onClick={onOpen} />
+						<IconButton size={'xs'} aria-label="add" icon={<AddIcon />} onClick={onOpen} />
 					</Box>
 				</HStack>
 			</CardBody>
 			<modalManager.UpdateAmount isOpen={isOpen} onClose={onClose} title={name} id={id} type='categoryAmount' setCategoryAmount={setCategoryAmount} />
-		</Card>
+		</Card >
 	);
 };

@@ -11,10 +11,12 @@ const monthlyIncomeSlice = createSlice({
 	name: "monthlyIncome",
 	initialState,
 	reducers: {
-		setAmount: (state, action) => {
-			if (state.amount === 0) state.amount = action.payload.amount;
-			if (state.amount) state.amount += action.payload;
-			else state.amount = action.payload;
+		setMonthlyAmount: (state, action) => {
+			state.amount = action.payload;
+		},
+		addMonthlyAmount: (state, action) => {
+			console.log(action.payload);
+			state.amount += action.payload;
 		},
 		addAccountBalance: (state, action) => {
 			state.accountBalance += action.payload;

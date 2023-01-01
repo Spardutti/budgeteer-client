@@ -4,7 +4,7 @@ import React from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { NumericFormat } from 'react-number-format';
 import { useSelector } from 'react-redux';
-import { addAccountBalance, setMonthlyAmount, setAccountBalance } from 'store/slices/monthlyIncome/action';
+import { addAccountBalance, setMonthlyAmount, setAccountBalance, addMonthlyAmount } from 'store/slices/monthlyIncome/action';
 import { setAmount } from 'store/slices/user/action';
 import { RootState, useAppDispatch } from 'store/store';
 
@@ -29,7 +29,6 @@ const UpdateAmount: React.FC<UpdateAmountProps> = ({ type, isOpen, onClose, titl
     const dispatch = useAppDispatch()
 
     const {
-        register,
         handleSubmit,
         reset,
         control,
@@ -40,19 +39,18 @@ const UpdateAmount: React.FC<UpdateAmountProps> = ({ type, isOpen, onClose, titl
 
     const setUserAmount = async (amount: number) => {
         try {
-            const response = await apiManager.updateUserAmount(token!, amount)
+            await apiManager.updateUserAmount(token!, amount)
             setAmount(dispatch, amount)
-            console.log(monthlyIncome)
-            if (monthlyIncome === 0) {
-                setMonthlyAmount(dispatch, amount)
-                addAccountBalance(dispatch, amount)
-                await apiManager.updateMonthlyIncomeAmount(token!, amount, amount)
-                onClose()
-                reset()
-                return
-            }
+            // if (monthlyIncome === 0) {
+            //     setMonthlyAmount(dispatch, amount)
+            //     setAccountBalance(dispatch, amount)
+            //     await apiManager.updateMonthlyIncomeAmount(token!, amount, amount)
+            //     onClose()
+            //     reset()
+            //     return
+            // }
             const amountDifference = amount - userAmount!
-            setMonthlyAmount(dispatch, amountDifference)
+            addMonthlyAmount(dispatch, amountDifference)
             addAccountBalance(dispatch, amountDifference)
             await apiManager.updateMonthlyIncomeAmount(token!, -amountDifference, -amountDifference)
             reset()
@@ -66,7 +64,7 @@ const UpdateAmount: React.FC<UpdateAmountProps> = ({ type, isOpen, onClose, titl
         try {
             const response = await apiManager.updateCategoryAmount(token!, amount, id!)
             setCategoryAmount!(response.data.amount)
-            setMonthlyAmount(dispatch, -amount)
+            addMonthlyAmount(dispatch, -amount)
             addAccountBalance(dispatch, -amount)
             reset()
             onClose()
@@ -77,7 +75,7 @@ const UpdateAmount: React.FC<UpdateAmountProps> = ({ type, isOpen, onClose, titl
 
     const updateAccountBalance = async (account_balance: number) => {
         try {
-            const response = await apiManager.updateAccountBalance(token!, account_balance)
+            await apiManager.updateAccountBalance(token!, account_balance)
             setAccountBalance(dispatch, account_balance)
             reset()
             onClose()
@@ -108,13 +106,11 @@ const UpdateAmount: React.FC<UpdateAmountProps> = ({ type, isOpen, onClose, titl
                 <ModalHeader>{title}</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                    {/* <Input type={"number"} placeholder='Amount' {...register("amount", { required: true })} /> */}
                     <Controller
                         render={({ field: { onChange, value } }) => (
                             <NumericFormat
-                                onValueChange={(v) => onChange(v.formattedValue)}
+                                onValueChange={(v) => onChange(v.floatValue)}
                                 prefix="$"
-                                value={value}
                                 thousandSeparator=','
                                 customInput={Input}
                                 placeholder="Amount"

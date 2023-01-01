@@ -23,4 +23,8 @@ const updateCategoryAmount = async (token: string, amount: number, id: number) =
 		{ headers: { Authorization: `Bearer ${token}` } }
 	);
 
-export { createCategory, getAllCategories, getMonthCategories, updateCategoryAmount };
+// Get unique months with data
+const getUniqueMonths = async (token: string) =>
+	await instance.get("/categories/unique_months/", { headers: { Authorization: `Bearer ${token}` } });
+
+export { createCategory, getAllCategories, getMonthCategories, updateCategoryAmount, getUniqueMonths };

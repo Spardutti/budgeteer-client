@@ -1,13 +1,21 @@
 import { AppDispatch } from "store/store";
 
-// Update user amount
-const monthlyAmount = (amount: number) => ({
-	type: "monthlyIncome/setAmount",
+// Set user amount
+const setMonthly = (amount: number) => ({
+	type: "monthlyIncome/setMonthlyAmount",
 	// payload: { amount, operator },
 	payload: amount,
 });
 
-export const setMonthlyAmount = (dispatch: AppDispatch, amount: number) => dispatch(monthlyAmount(amount));
+export const setMonthlyAmount = (dispatch: AppDispatch, amount: number) => dispatch(setMonthly(amount));
+
+// Add monthly amount
+const addMonthly = (amount: number) => ({
+	type: "monthlyIncome/addMonthlyAmount",
+	payload: amount,
+});
+
+export const addMonthlyAmount = (dispatch: AppDispatch, amount: number) => dispatch(addMonthly(amount));
 
 // Add account balance
 const addBalance = (amount: number) => ({

@@ -1,4 +1,4 @@
-import { Button, Center, FormControl, FormErrorMessage, FormLabel, Input, useBoolean } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, FormControl, FormErrorMessage, FormLabel, Input, useBoolean } from "@chakra-ui/react";
 import { apiManager } from "api";
 import axios from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -50,18 +50,20 @@ export const CreateCategory: React.FC<Props> = ({ updateState }) => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
-			<FormControl isInvalid={Boolean(errors.name)}>
-				<FormLabel htmlFor='name'>Category name</FormLabel>
-				<Input placeholder='category name' {...register("name", { required: true })} disabled={isLoading} />
-				<FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
-				<FormLabel>{creationErrors && creationErrors["name"]}</FormLabel>
-			</FormControl>
-			<Center>
-				<Button type='submit' isLoading={isLoading} disabled={!isValid || isLoading}>
-					Create category
-				</Button>
-			</Center>
-		</form>
+		<Flex justify={['center']} mx={2}>
+			<form onSubmit={handleSubmit(onSubmit)}>
+				<FormControl isInvalid={Boolean(errors.name)}>
+					<FormLabel htmlFor='name'>Category name</FormLabel>
+					<Input placeholder='category name' {...register("name", { required: true })} disabled={isLoading} />
+					<FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
+					<FormLabel>{creationErrors && creationErrors["name"]}</FormLabel>
+				</FormControl>
+				<Box textAlign="center">
+					<Button size={['xs', 'md']} type='submit' isLoading={isLoading} disabled={!isValid || isLoading}>
+						Create category
+					</Button>
+				</Box>
+			</form>
+		</Flex>
 	);
 };

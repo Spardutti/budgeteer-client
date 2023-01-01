@@ -1,7 +1,9 @@
 import { instance } from "config/axiosConfig";
 // Get monhly income
-const getMonhlyIncome = async (token: string) =>
-	await instance.get("/monthlyincome/1/", { headers: { Authorization: `Bearer ${token}` } });
+const getMonhlyIncome = async (token: string, year: number, month: number) =>
+	await instance.get(`/monthlyincome/1/monthly/?year=${year}&month=${month}`, {
+		headers: { Authorization: `Bearer ${token}` },
+	});
 
 // Update Monthly Income Amount
 const updateMonthlyIncomeAmount = async (token: string, amount: number, account_balance?: number) =>

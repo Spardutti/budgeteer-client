@@ -10,8 +10,6 @@ export const Login = () => {
 	const [isLoading, setIsLoading] = useBoolean();
 
 	const { signin, loginErrors, setLoginErrors } = useProvideAuth()
-	// TODO set button to update USER amount
-	// TODO create a new user and test the flow of monthly income, user amount, and categories amount update
 	const {
 		register,
 		handleSubmit,
