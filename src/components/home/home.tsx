@@ -4,11 +4,11 @@ import { FormsManager } from "components/forms/FormsManager";
 import { useEffect, useState } from "react";
 import { apiManager } from "api";
 import { WeeklyCategory } from "_types";
-import { CardsManager } from "components/Cards/CardsManagers";
+import { CardsManager } from "components/cards/CardsManagers";
 import { Box, Button, Divider, Heading, HStack, useBoolean } from "@chakra-ui/react";
 import { DateTime, Info } from "luxon";
 import { weekOfMonth } from "utils/utils";
-import MonthlyIncome from "components/MonthlyIncome/MonthlyIncome";
+import MonthlyIncome from "components/monthlyIncome/MonthlyIncome";
 import Layout from "layout/Layout";
 
 export const Home = () => {
