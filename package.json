@@ -2,7 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://spardutti.github.io/budgeteer-client",
+  "homepage": "http://spardutti.github.io/budgeteer-client/",
   "dependencies": {
     "@chakra-ui/icons": "^2.0.14",
     "@chakra-ui/react": "^2.4.2",
