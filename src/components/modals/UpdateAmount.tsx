@@ -1,6 +1,6 @@
 import { Button, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/react';
 import { apiManager } from 'api';
-import React from 'react';
+import React, { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { NumericFormat } from 'react-number-format';
 import { useSelector } from 'react-redux';
@@ -26,6 +26,7 @@ const UpdateAmount: React.FC<UpdateAmountProps> = ({ type, isOpen, onClose, titl
     const monthlyIncome = useSelector((state: RootState) => state.monthlyIncome.amount)
     const userAmount = useSelector((state: RootState) => state.user.user?.amount)
     const token = useSelector((state: RootState) => state.user.tokens?.access)
+    const [isLoading, setIsLoading] = useState(false)
     const dispatch = useAppDispatch()
 
     const {
@@ -38,17 +39,18 @@ const UpdateAmount: React.FC<UpdateAmountProps> = ({ type, isOpen, onClose, titl
 
 
     const setUserAmount = async (amount: number) => {
+        setIsLoading(true)
         try {
             await apiManager.updateUserAmount(token!, amount)
             setAmount(dispatch, amount)
-            // if (monthlyIncome === 0) {
-            //     setMonthlyAmount(dispatch, amount)
-            //     setAccountBalance(dispatch, amount)
-            //     await apiManager.updateMonthlyIncomeAmount(token!, amount, amount)
-            //     onClose()
-            //     reset()
-            //     return
-            // }
+            if (monthlyIncome === 0) {
+                setMonthlyAmount(dispatch, amount)
+                setAccountBalance(dispatch, amount)
+                await apiManager.updateMonthlyIncomeAmount(token!, amount, amount)
+                onClose()
+                reset()
+                return
+            }
             const amountDifference = amount - userAmount!
             addMonthlyAmount(dispatch, amountDifference)
             addAccountBalance(dispatch, amountDifference)
@@ -58,9 +60,11 @@ const UpdateAmount: React.FC<UpdateAmountProps> = ({ type, isOpen, onClose, titl
         } catch (error) {
             console.log(error)
         }
+        setIsLoading(false)
     }
 
     const updateCategoryAmount = async (amount: number) => {
+        setIsLoading(true)
         try {
             const response = await apiManager.updateCategoryAmount(token!, amount, id!)
             setCategoryAmount!(response.data.amount)
@@ -71,9 +75,11 @@ const UpdateAmount: React.FC<UpdateAmountProps> = ({ type, isOpen, onClose, titl
         } catch (error) {
             console.log(error)
         }
+        setIsLoading(false)
     }
 
     const updateAccountBalance = async (account_balance: number) => {
+        setIsLoading(true)
         try {
             await apiManager.updateAccountBalance(token!, account_balance)
             setAccountBalance(dispatch, account_balance)
@@ -82,6 +88,7 @@ const UpdateAmount: React.FC<UpdateAmountProps> = ({ type, isOpen, onClose, titl
         } catch (error) {
             console.log(error)
         }
+        setIsLoading(false)
     }
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
@@ -111,7 +118,8 @@ const UpdateAmount: React.FC<UpdateAmountProps> = ({ type, isOpen, onClose, titl
                             <NumericFormat
                                 onValueChange={(v) => onChange(v.floatValue)}
                                 prefix="$"
-                                thousandSeparator=','
+                                thousandSeparator='.'
+                                decimalSeparator=','
                                 customInput={Input}
                                 placeholder="Amount"
                             />
@@ -121,7 +129,7 @@ const UpdateAmount: React.FC<UpdateAmountProps> = ({ type, isOpen, onClose, titl
                     />
                 </ModalBody>
                 <ModalFooter>
-                    <Button onClick={handleSubmit(onSubmit)} disabled={!isValid} variant='ghost'>Update</Button>
+                    <Button isLoading={isLoading} isDisabled={isLoading} onClick={handleSubmit(onSubmit)} disabled={!isValid} variant='ghost'>Update</Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>

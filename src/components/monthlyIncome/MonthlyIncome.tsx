@@ -65,13 +65,16 @@ const MonthlyIncome: React.FC<MonthlyIncomeProps> = ({ monthYear }) => {
 
     return (
         <Flex direction={['column', 'row']} textAlign={['center', 'left']} maxW="xxl" gap={4} mt={4}>
-            <Text>Month balance: <NumericFormat value={monthlyIncome} prefix={'$'} thousandSeparator="," displayType='text' /></Text>
+            <Text>Month balance: <NumericFormat value={monthlyIncome} prefix={'$'} thousandSeparator='.'
+                decimalSeparator=',' displayType='text' /></Text>
             <HStack justify={['center', 'left']}>
-                <Text>User Income: <NumericFormat value={userIncome} prefix={'$'} thousandSeparator="," displayType='text' /></Text>
+                <Text>User Income: <NumericFormat value={userIncome} prefix={'$'} thousandSeparator='.'
+                    decimalSeparator=',' displayType='text' /></Text>
                 <IconButton size="xs" aria-label='edit' icon={<EditIcon />} onClick={() => openModal('User Income', 'userAmount')} />
             </HStack>
             <HStack justify={['center', 'left']}>
-                <Text>Account Balance: <NumericFormat value={accountBalance} prefix={'$'} thousandSeparator="," displayType='text' /></Text>;
+                <Text>Account Balance: <NumericFormat value={accountBalance} prefix={'$'} thousandSeparator='.'
+                    decimalSeparator=',' displayType='text' /></Text>;
                 <IconButton size={"xs"} aria-label='edit' icon={<EditIcon />} onClick={() => openModal('Account Balance', 'accountBalance')} />
             </HStack>
             <modalManager.UpdateAmount onClose={onClose} isOpen={isOpen} type={modalInfo.type} title={modalInfo.title} />

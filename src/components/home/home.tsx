@@ -107,7 +107,7 @@ export const Home = () => {
 	if (isLoading) return <Box textAlign={"center"}>Loading</Box>
 
 	// If there are no categories, shows the form to create the first one
-	if (currentWeekCategories.length === 0 && !isLoading && otherCategories.length === 0) return <FormsManager.CreateCategory updateState={setCurrentWeekCategories} />;
+	if (currentWeekCategories.length === 0 && !isLoading && otherCategories.length === 0) return <FormsManager.CreateCategory setIsAddNewCategory={setIsAddNewCategory} updateState={setCurrentWeekCategories} />;
 	return (
 		<Layout>
 			<Heading size={"lg"} textAlign='center' my={10}>
@@ -117,25 +117,29 @@ export const Home = () => {
 			<Box textAlign={"center"}>
 				<Button size={['xs', 'md']} mx={"auto"} onClick={setIsAddNewCategory.toggle}>{!isAddNewCategory ? "Create new category" : "Hide"}</Button>
 			</Box>
-			{isAddNewCategory && <FormsManager.CreateCategory updateState={setCurrentWeekCategories} />}
+			{isAddNewCategory && <FormsManager.CreateCategory setIsAddNewCategory={setIsAddNewCategory} updateState={setCurrentWeekCategories} />}
 			<Divider py={2} />
 			<MonthlyIncome monthYear={monthYear} />
-			{currentWeekCategories.length !== 0 ? <CurrentWeekCategories currentWeekCategories={currentWeekCategories} /> : null}
-			<OtherWeekCategories otherWeekCategories={otherCategories} />
+			{currentWeekCategories.length !== 0 ? <CurrentWeekCategories categories={currentWeekCategories} setCategories={setCurrentWeekCategories} /> : null}
+			<OtherWeekCategories categories={otherCategories} setCategories={setOtherCategories} />
 		</Layout>
 	);
 };
 
 // Display current week categories of current month on top
-const CurrentWeekCategories: React.FC<{ currentWeekCategories: WeeklyCategory[] }> = ({ currentWeekCategories }) => (
+interface Props {
+	categories: WeeklyCategory[]
+	setCategories: React.Dispatch<React.SetStateAction<WeeklyCategory[]>>
+}
+const CurrentWeekCategories: React.FC<Props> = ({ categories, setCategories }) => (
 	<>
 		<Heading size={"md"} textAlign='center' p={2}>
 			Week # {weekOfMonth()}
 		</Heading>
 		{/* <SimpleGrid columns={[2, 6]} gap={4} my={2} > */}
 		<HStack wrap='wrap' gap={['8', '4']} justify="center"  >
-			{currentWeekCategories?.map((cat: WeeklyCategory, idx: number) => (
-				<CardsManager.WeeklyCategoryCard {...cat} key={idx} />
+			{categories?.map((cat: WeeklyCategory) => (
+				<CardsManager.WeeklyCategoryCard cat={cat} key={cat.id} categories={categories} setCategories={setCategories} />
 			))}
 		</HStack>
 		{/* </SimpleGrid> */}
@@ -143,8 +147,8 @@ const CurrentWeekCategories: React.FC<{ currentWeekCategories: WeeklyCategory[] 
 );
 
 // Display categories that do not belong to the current week
-const OtherWeekCategories: React.FC<{ otherWeekCategories: WeeklyCategory[] }> = ({ otherWeekCategories }) => {
-	const arr = otherWeekCategories.sort((a, b) => a.week - b.week);
+const OtherWeekCategories: React.FC<Props> = ({ categories, setCategories }) => {
+	const arr = categories.sort((a, b) => a.week - b.week);
 	const weeks: number[] = [];
 	for (let w in arr) {
 		let week = arr[w].week;
@@ -161,9 +165,9 @@ const OtherWeekCategories: React.FC<{ otherWeekCategories: WeeklyCategory[] }> =
 								Week # {w}
 							</Heading>
 							<HStack wrap='wrap' gap={['8', '4']} justify="center"  >
-								{arr.map((cat: WeeklyCategory, index: number) => {
+								{arr.map((cat: WeeklyCategory) => {
 									if (cat.week === w) {
-										return <CardsManager.WeeklyCategoryCard {...cat} key={index} />;
+										return <CardsManager.WeeklyCategoryCard cat={cat} key={cat.id} categories={arr} setCategories={setCategories} />;
 									}
 								})}
 							</HStack>
