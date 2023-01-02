@@ -55,6 +55,7 @@ export const CreateUser = () => {
 					placeholder='username'
 					{...register("username", { required: "Username is required" })}
 					disabled={isLoading}
+					autoComplete='off'
 				/>
 				<FormErrorMessage>{errors.username && errors.username.message}</FormErrorMessage>
 				<FormLabel>{loginErrors && loginErrors["username"]}</FormLabel>

@@ -9,8 +9,13 @@ import { WeeklyCategory } from "_types";
 
 interface Props {
 	updateState: React.Dispatch<React.SetStateAction<WeeklyCategory[]>>;
+	setIsAddNewCategory: {
+		on: () => void;
+		off: () => void;
+		toggle: () => void;
+	}
 }
-export const CreateCategory: React.FC<Props> = ({ updateState }) => {
+export const CreateCategory: React.FC<Props> = ({ updateState, setIsAddNewCategory }) => {
 	type FormData = {
 		name: string;
 	};
@@ -25,6 +30,7 @@ export const CreateCategory: React.FC<Props> = ({ updateState }) => {
 			if (response.status === 201) {
 				updateState((prev) => [...prev, response.data]);
 				setIsloading.off();
+				setIsAddNewCategory.off()
 				reset();
 			}
 		} catch (err) {
@@ -54,7 +60,7 @@ export const CreateCategory: React.FC<Props> = ({ updateState }) => {
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<FormControl isInvalid={Boolean(errors.name)}>
 					<FormLabel htmlFor='name'>Category name</FormLabel>
-					<Input placeholder='category name' {...register("name", { required: true })} disabled={isLoading} />
+					<Input placeholder='category name' {...register("name", { required: true })} disabled={isLoading} autoComplete='off' />
 					<FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
 					<FormLabel>{creationErrors && creationErrors["name"]}</FormLabel>
 				</FormControl>

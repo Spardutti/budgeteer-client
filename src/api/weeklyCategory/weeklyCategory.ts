@@ -27,4 +27,8 @@ const updateCategoryAmount = async (token: string, amount: number, id: number) =
 const getUniqueMonths = async (token: string) =>
 	await instance.get("/categories/unique_months/", { headers: { Authorization: `Bearer ${token}` } });
 
-export { createCategory, getAllCategories, getMonthCategories, updateCategoryAmount, getUniqueMonths };
+// Delete a category
+const deleteCategory = async (token: string, id: number) =>
+	await instance.delete(`/categories/${id}/`, { headers: { Authorization: `Bearer ${token}` } });
+
+export { createCategory, getAllCategories, getMonthCategories, updateCategoryAmount, getUniqueMonths, deleteCategory };

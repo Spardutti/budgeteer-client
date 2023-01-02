@@ -5,6 +5,7 @@ import {
 	getMonthCategories,
 	updateCategoryAmount,
 	getUniqueMonths,
+	deleteCategory,
 } from "./weeklyCategory/weeklyCategory";
 
 import { updateMonthlyIncomeAmount, getMonhlyIncome, updateAccountBalance } from "./monthlyIncome/monthlyIncome";
@@ -20,6 +21,7 @@ export const apiManager = {
 	getMonthCategories,
 	updateCategoryAmount,
 	getUniqueMonths,
+	deleteCategory,
 
 	// Monthly Income
 	updateMonthlyIncomeAmount,
