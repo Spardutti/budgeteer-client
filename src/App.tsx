@@ -6,6 +6,7 @@ import { Home } from "components/home/Home"
 import store from "store/store";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "theme/theme";
+import Login from "components/account/Login";
 
 function App() {
 
@@ -23,8 +24,8 @@ function App() {
 				<ChakraProvider theme={theme}>
 					<Routes>
 						<Route path='/' element={<Navigate to={"/home"} />} />
-						<Route path='/login' element={<FormsManager.Login />} />
-						<Route path='/create' element={<FormsManager.CreateUser />} />
+						<Route path='/login' element={<Login />} />
+						{/* <Route path='/create' element={<FormsManager.CreateUser />} /> */}
 						<Route path='/home' element={<AuthRoute />}>
 							<Route path='/home' element={<Home />} />
 						</Route>

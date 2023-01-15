@@ -8,4 +8,7 @@ const weekOfMonth = () => {
 	return Math.ceil((month_day + 6 - week_day) / 7) + 1;
 };
 
-export { weekOfMonth };
+// Change the decimal separator
+const decimalSeparator = (n: string) => n.toString().replace(".", ",");
+
+export { weekOfMonth, decimalSeparator };
