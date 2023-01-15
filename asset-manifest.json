@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/budgeteer-client/static/js/main.90f28166.js",
+    "main.js": "/budgeteer-client/static/js/main.efb53f23.js",
     "index.html": "/budgeteer-client/index.html",
-    "main.90f28166.js.map": "/budgeteer-client/static/js/main.90f28166.js.map"
+    "main.efb53f23.js.map": "/budgeteer-client/static/js/main.efb53f23.js.map"
   },
   "entrypoints": [
-    "static/js/main.90f28166.js"
+    "static/js/main.efb53f23.js"
   ]
 }
