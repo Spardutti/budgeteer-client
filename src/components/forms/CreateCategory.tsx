@@ -5,10 +5,10 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { useState } from "react";
-import { WeeklyCategory } from "_types";
+import { Category } from "_types";
 
 interface Props {
-	updateState: React.Dispatch<React.SetStateAction<WeeklyCategory[]>>;
+	updateState: React.Dispatch<React.SetStateAction<Category[]>>;
 	setIsAddNewCategory: {
 		on: () => void;
 		off: () => void;

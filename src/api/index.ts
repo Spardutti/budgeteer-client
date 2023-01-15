@@ -1,4 +1,4 @@
-import { getUser, createUser, loginUser, updateUserAmount } from "./user/user";
+import { getUser, createUser, loginUser } from "./user/user";
 import {
 	createCategory,
 	getAllCategories,
@@ -6,14 +6,14 @@ import {
 	updateCategoryAmount,
 	getUniqueMonths,
 	deleteCategory,
-} from "./weeklyCategory/weeklyCategory";
+} from "./weeklyCategory/category";
 
-import { updateMonthlyIncomeAmount, getMonhlyIncome, updateAccountBalance } from "./monthlyIncome/monthlyIncome";
+import { getCategoyExpenses, createExpense, editExpense } from "./expense/expense";
+
 export const apiManager = {
 	createUser,
 	getUser,
 	loginUser,
-	updateUserAmount,
 
 	// Categories
 	createCategory,
@@ -23,8 +23,8 @@ export const apiManager = {
 	getUniqueMonths,
 	deleteCategory,
 
-	// Monthly Income
-	updateMonthlyIncomeAmount,
-	getMonhlyIncome,
-	updateAccountBalance,
+	// Expenses
+	getCategoyExpenses,
+	createExpense,
+	editExpense,
 };

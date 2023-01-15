@@ -1,10 +1,10 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import user from "./slices/user/userSlice";
-import monthlyIncome from "./slices/monthlyIncome/monthlyIncomeSlice";
+import balance from "./slices/incomeBalance/balanceSlice";
 
 const rootReducer = combineReducers({
 	user,
-	monthlyIncome,
+	balance,
 });
 
 export default rootReducer;

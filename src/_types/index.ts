@@ -1,16 +1,19 @@
-export interface WeeklyCategory {
+import { DateTime } from "luxon";
+export interface Category {
 	name: string;
 	user: UserInterface;
-	year: number;
-	month: number;
-	week: number;
-	amount: number;
+	date: DateTime;
+	budget: number;
 	id: number;
+	isDeleted: boolean;
+	position: number;
 }
 
-export interface WeeklyExpense {
-	user: UserInterface;
-	weeklyCategory: WeeklyCategory;
+export interface Expense {
+	id: number;
+	description: string;
+	date: DateTime;
+	category: Category;
 	amount: number;
 }
 
@@ -30,5 +33,4 @@ export interface TokensInterface {
 export interface UserInterface {
 	id: number;
 	username: string;
-	amount: number;
 }

@@ -13,8 +13,4 @@ const loginUser = async (username: string, password: string) =>
 const createUser = async (username: string, password: string) =>
 	await instance.post<UserInterface>("/users/", { username, password });
 
-// Update user amount
-const updateUserAmount = async (token: string, amount: number) =>
-	await instance.patch<UserInterface>("/users/1/", { amount }, { headers: { Authorization: `Bearer ${token}` } });
-
-export { getUser, createUser, loginUser, updateUserAmount };
+export { getUser, createUser, loginUser };

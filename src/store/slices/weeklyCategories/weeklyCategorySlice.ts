@@ -1,8 +1,8 @@
-import { WeeklyCategory } from "_types/index";
+import { Category } from "_types/index";
 import { createSlice } from "@reduxjs/toolkit";
 
 type StateType = {
-	weeklyCategory: WeeklyCategory[] | undefined;
+	weeklyCategory: Category[] | undefined;
 };
 
 const initialState: StateType = {
@@ -15,9 +15,7 @@ const weeklyCategorySlice = createSlice({
 	name: NAME,
 	initialState,
 	reducers: {
-		getAllCategories: (state, action) => {
-			console.log(action.payload);
-		},
+		getAllCategories: (state, action) => {},
 	},
 });
 

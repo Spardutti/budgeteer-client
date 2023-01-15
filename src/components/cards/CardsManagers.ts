@@ -1,4 +1,4 @@
-import { WeeklyCategoryCard } from "./WeeklyCategory";
+import { WeeklyCategoryCard } from "./Category";
 
 export const CardsManager = {
 	WeeklyCategoryCard,

@@ -50,6 +50,10 @@ export const useProvideAuth = () => {
 
 	const signout = () => {
 		setUser(undefined);
+		setToken("");
+		getUser(dispatch, null);
+		getTokens(dispatch, { access: "", refresh: "" });
+		navigate("/login");
 	};
 
 	return {
