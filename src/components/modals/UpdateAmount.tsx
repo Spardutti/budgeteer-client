@@ -16,6 +16,7 @@ import { NumericFormat } from "react-number-format";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "store/store";
 import { addExpenseAmount } from "store/slices/incomeBalance/action";
+import { Expense } from "_types";
 
 interface UpdateAmountProps {
 	type: string;
@@ -28,9 +29,21 @@ interface UpdateAmountProps {
 		amount: number | null;
 		description: string | undefined;
 	};
+	setExpenseDetail?: React.Dispatch<React.SetStateAction<Expense[]>>;
+	expenseDetail?: Expense[];
 }
 
-const UpdateAmount: React.FC<UpdateAmountProps> = ({ type, isOpen, onClose, title, addExpenseState, id, values }) => {
+const UpdateAmount: React.FC<UpdateAmountProps> = ({
+	type,
+	isOpen,
+	onClose,
+	title,
+	addExpenseState,
+	id,
+	values,
+	setExpenseDetail,
+	expenseDetail,
+}) => {
 	type FormData = {
 		amount: number;
 		description: string;
@@ -52,6 +65,7 @@ const UpdateAmount: React.FC<UpdateAmountProps> = ({ type, isOpen, onClose, titl
 			const response = await apiManager.createExpense(id!, token!, amount, description);
 			addExpenseState!((prev) => prev + amount);
 			addExpenseAmount(dispatch, amount);
+			setExpenseDetail!((prev) => [...prev, response.data]);
 			reset();
 			onClose();
 		} catch (error) {
@@ -69,6 +83,12 @@ const UpdateAmount: React.FC<UpdateAmountProps> = ({ type, isOpen, onClose, titl
 				const diff = -oldAmount + amount;
 				addExpenseState!((prev) => prev + diff);
 				addExpenseAmount(dispatch, diff);
+				setExpenseDetail!((expenses: Expense[]) =>
+					expenses.map((expense: Expense) =>
+						expense.id === expenseId ? { ...expense, amount: amount } : expense
+					)
+				);
+				//TODO rename this to edit rather than update amount
 			}
 			reset();
 			onClose();

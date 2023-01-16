@@ -89,12 +89,12 @@ const IncomeBalance: React.FC<IncomeBalanceProps> = ({ categories }) => {
 						decimalScale={2}
 					/>
 				</Text>
-				<IconButton
+				{/* <IconButton
 					size='xs'
 					aria-label='edit'
 					icon={<EditIcon />}
 					onClick={() => openModal("User Income", "userAmount")}
-				/>
+				/> */}
 			</HStack>
 			{/* <HStack justify={["center", "left"]}>
 				<Text>

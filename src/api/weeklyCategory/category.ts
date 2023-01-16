@@ -2,8 +2,8 @@ import { Category } from "_types/index";
 import { instance } from "config/axiosConfig";
 
 // Create category
-const createCategory = async (name: string, token: string) =>
-	await instance.post<Category>("/categories/", { name }, { headers: { Authorization: `Bearer ${token}` } });
+const createCategory = async (name: string, budget: number, token: string) =>
+	await instance.post<Category>("/categories/", { name, budget }, { headers: { Authorization: `Bearer ${token}` } });
 
 // Get all user Categories
 const getAllCategories = async (token: string) =>
