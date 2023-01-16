@@ -24,7 +24,7 @@ export const WeeklyCategoryCard: React.FC<Props> = ({ cat, categories, setCatego
 	const [isLoading, setIsLoading] = useState(false);
 	const [amount, setAmount] = useState(0);
 	const [isShowDetail, setIsShowDetail] = useState(false);
-	const [expenseDetail, setIsExpenseDetail] = useState<Expense[]>([]);
+	const [expenseDetail, setExpenseDetail] = useState<Expense[]>([]);
 	const dispatch = useAppDispatch();
 	const [modalType, setModalType] = useState("");
 	const [values, setValues] = useState<{ amount: number | null; description: string | undefined }>({
@@ -39,7 +39,7 @@ export const WeeklyCategoryCard: React.FC<Props> = ({ cat, categories, setCatego
 
 	const getExpenses = async () => {
 		const { data } = await apiManager.getCategoyExpenses(cat.id, token!);
-		setIsExpenseDetail(data);
+		setExpenseDetail(data);
 		let expenseTotal: number = 0;
 		data.forEach((expense: Expense) => {
 			expenseTotal += +expense.amount;
@@ -56,11 +56,9 @@ export const WeeklyCategoryCard: React.FC<Props> = ({ cat, categories, setCatego
 		setIsLoading(true);
 		try {
 			await apiManager.deleteCategory(token!, cat.id);
-			const index = categories.findIndex((e) => e.id === cat.id);
-			if (index > -1) {
-				const arr = categories.splice(index, 1);
-				setCategories(arr);
-			}
+			setCategories((categories: Category[]) =>
+				categories.filter((category: Category) => category.id !== cat.id)
+			);
 		} catch (error) {
 			console.log(error);
 		}
@@ -188,7 +186,10 @@ export const WeeklyCategoryCard: React.FC<Props> = ({ cat, categories, setCatego
 					<IconButton
 						bottom={-4}
 						pos={"absolute"}
-						left='50%'
+						left='0'
+						right='0'
+						w={4}
+						size='sm'
 						aria-label='expand'
 						icon={isShowDetail ? <ChevronUpIcon /> : <ChevronDownIcon />}
 						onClick={() => setIsShowDetail(!isShowDetail)}
@@ -205,6 +206,7 @@ export const WeeklyCategoryCard: React.FC<Props> = ({ cat, categories, setCatego
 				type={modalType}
 				addExpenseState={setAmount}
 				values={values}
+				setExpenseDetail={setExpenseDetail}
 			/>
 		</Card>
 	);

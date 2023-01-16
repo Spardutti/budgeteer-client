@@ -104,14 +104,14 @@ export const Home = () => {
 
 	if (isLoading) return <Box textAlign={"center"}>Loading</Box>;
 
-	// If there are no categories, shows the form to create the first one
-	if (currentWeekCategories.length === 0 && !isLoading && otherCategories.length === 0)
-		return (
-			<FormsManager.CreateCategory
-				setIsAddNewCategory={setIsAddNewCategory}
-				updateState={setCurrentWeekCategories}
-			/>
-		);
+	// // If there are no categories, shows the form to create the first one
+	// if (currentWeekCategories.length === 0 && !isLoading && otherCategories.length === 0)
+	// 	return (
+	// 		<FormsManager.CreateCategory
+	// 			setIsAddNewCategory={setIsAddNewCategory}
+	// 			updateState={setCurrentWeekCategories}
+	// 		/>
+	// 	);
 	return (
 		<Layout>
 			<HStack justify={"flex-end"}>
@@ -158,35 +158,3 @@ const CurrentWeekCategories: React.FC<Props> = ({ categories, setCategories }) =
 		))}
 	</HStack>
 );
-
-// Display categories that do not belong to the current week
-// const OtherWeekCategories: React.FC<Props> = ({ categories, setCategories }) => {
-// 	const arr = categories.sort((a, b) => a.date - b.week);
-// 	const weeks: number[] = [];
-// 	for (let w in arr) {
-// 		let week = arr[w].week;
-// 		if (weeks.indexOf(week) === -1) weeks.push(week);
-// 	}
-
-// 	return (
-// 		<>
-// 			{weeks &&
-// 				weeks.map((w: number, idx: number) => {
-// 					return (
-// 						<Box key={idx}>
-// 							<Heading size={"md"} textAlign='center' p={2} >
-// 								Week # {w}
-// 							</Heading>
-// 							<HStack wrap='wrap' gap={['8', '4']} justify="center"  >
-// 								{arr.map((cat: Category) => {
-// 									if (cat.week === w) {
-// 										return <CardsManager.WeeklyCategoryCard cat={cat} key={cat.id} categories={arr} setCategories={setCategories} />;
-// 									}
-// 								})}
-// 							</HStack>
-// 						</Box>
-// 					);
-// 				})}
-// 		</>
-// 	);
-// };
